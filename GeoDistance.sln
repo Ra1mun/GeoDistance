@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance", "GeoDistance\GeoDistance.csproj", "{863B349A-F145-4E1D-AF50-6C9E9E062CDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Core", "GeoDistance.Core\GeoDistance.Core.csproj", "{863B349A-F145-4E1D-AF50-6C9E9E062CDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Tests", "GeoDistance.Tests\GeoDistance.Tests.csproj", "{62EBF6C7-B146-43CA-8B21-94DDF68D0A39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Core.Tests.Unit", "GeoDistance.Core.Tests.Unit\GeoDistance.Core.Tests.Unit.csproj", "{62EBF6C7-B146-43CA-8B21-94DDF68D0A39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Web", "GeoDistance.Web\GeoDistance.Web.csproj", "{F20848C0-93D1-4B11-9E5C-4597099B784C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Api", "GeoDistance.Api\GeoDistance.Api.csproj", "{F20848C0-93D1-4B11-9E5C-4597099B784C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
