@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "cPCGzwidKRUEidpN1oAiII0ZeagLQFirjnb0RPyS0gc=",
+  "Source": "GeopositionDistance.Web",
+  "BasePath": "_content/GeopositionDistance.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
