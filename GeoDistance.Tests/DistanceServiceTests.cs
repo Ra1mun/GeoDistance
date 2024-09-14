@@ -1,4 +1,5 @@
-﻿using GeopositionDistace;
+﻿using GeoDistance;
+
 
 namespace GeopositionDistance.Tests;
 

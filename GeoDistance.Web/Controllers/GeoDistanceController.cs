@@ -1,4 +1,4 @@
-using GeopositionDistace;
+using GeoDistance;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeopositionDistance.Web.Controllers;

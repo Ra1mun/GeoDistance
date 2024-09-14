@@ -1,12 +1,6 @@
 ﻿using System.Net.Http.Json;
 
-namespace GeopositionDistace;
-
-public interface IDistanceService
-{
-    Task<double> GetDistance(string firstIATA, string secondIATA);
-    Task<GeoPosition?> GetGeoPosition(string iata);
-}
+namespace GeoDistance;
 
 public class DistanceService : IDistanceService
 {

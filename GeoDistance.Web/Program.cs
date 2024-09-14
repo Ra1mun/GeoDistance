@@ -1,4 +1,4 @@
-using GeopositionDistace;
+using GeoDistance;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,23 +1,22 @@
-﻿namespace GeopositionDistace
+﻿namespace GeoDistance;
+
+public record GeoPosition
 {
-    public record GeoPosition
+    public string IATA
     {
-        public string IATA
+        get => _iata;
+        init
         {
-            get => _iata;
-            init
+            if (string.IsNullOrWhiteSpace(value))
             {
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new InvalidOperationException(nameof(value));
-                }
-
-                _iata = value;
+                throw new InvalidOperationException(nameof(value));
             }
-        }
-        
-        public Location Location { get; init; }
 
-        private string _iata;
+            _iata = value;
+        }
     }
+        
+    public Location Location { get; init; }
+
+    private string _iata;
 }

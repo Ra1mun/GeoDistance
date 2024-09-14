@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace GeopositionDistace;
+namespace GeoDistance;
 
 public record struct Location
 {
