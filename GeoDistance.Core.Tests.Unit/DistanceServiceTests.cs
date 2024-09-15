@@ -1,6 +1,8 @@
 ﻿namespace GeoDistance.Core.Tests.Unit;
 
 using GeoDistance.Core.Services;
+using GeoDistance.Core.Dto;
+using GeoDistance.Core.Exceptions;
 
 using NSubstitute;
 
@@ -11,45 +13,51 @@ public class DistanceServiceTests
     public DistanceServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        _distanceService = new DistanceService(httpClient);
+        var geoCoordinateService = new GeoCoordinateService(httpClient);
+        _distanceService = new DistanceService(geoCoordinateService);
     }
 
     private readonly IDistanceService _distanceService;
-    private readonly string FirstIATA = "AMS";
-    private readonly string SecondIATA = "MSC";
+    
+    private readonly IataModel _firstIataModel = new()
+    {
+        Name = "AMS"
+    };
+
+    private readonly IataModel _secondIataModel = new()
+    {
+        Name = "MSC"
+    };
+    
+    private readonly IataModel _badIataModel = new()
+    {
+        Name = ""
+    };
 
     [Fact]
-    public async Task GetDistance_WithDifferentIATAs_Return()
+    public async Task GetDistance_WithBadIATAs_ThrowException()
     {
-        var excepted = 8675048.422827687;
-        var actual = await _distanceService.GetDistance(FirstIATA, FirstIATA);
-
-        Assert.Equal(excepted, actual);
-    }
-
-    [Fact]
-    public async Task GetDistance_WithoutIATAs_ThrowException()
-    {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidIataException>(async () =>
         {
-            await _distanceService.GetDistance(null, null);
+            await _distanceService.GetDistance(_badIataModel, _badIataModel);
         });
     }
-
+    
     [Fact]
-    public async Task GetDistance_WithoutOneIATA_ThrowException()
+    public async Task GetDistance_WithCorrectAndBadIATAs_ThrowException()
     {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidIataException>(async () =>
         {
-            await _distanceService.GetDistance(FirstIATA, null);
+            await _distanceService.GetDistance(_firstIataModel, _badIataModel);
         });
     }
-
+    
     [Fact]
-    public async Task GetDistance_WithSimilarIATA_ThrowException()
+    public async Task GetDistance_WithCorrectIATAs_Returns()
     {
-        var result = await _distanceService.GetDistance(FirstIATA, FirstIATA);
-
-        Assert.Equal(0.0, result);
+        var exception = 8675048.422827687;
+        var actual = await _distanceService.GetDistance(_firstIataModel, _badIataModel);
+        
+        Assert.Equal(exception, actual.Value);
     }
 }

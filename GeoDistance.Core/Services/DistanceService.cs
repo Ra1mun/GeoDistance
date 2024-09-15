@@ -7,17 +7,17 @@ using GeoDistance.Core.Exceptions;
 
 public class DistanceService : IDistanceService
 {
-    private readonly HttpClient _httpClient;
+    private readonly IGeoCoordinateService _geoCoordinateService;
 
-    public DistanceService(HttpClient httpClient)
+    public DistanceService(IGeoCoordinateService geoCoordinateService)
     {
-        _httpClient = httpClient;
+        _geoCoordinateService = geoCoordinateService;
     }
 
     public async Task<DistanceModel> GetDistance(IataModel firstIata, IataModel secondIata)
     {
-        var firstPoint = await GetGeoPosition(firstIata);
-        var secondPoint = await GetGeoPosition(secondIata);
+        var firstPoint = await _geoCoordinateService.GetGeoCoordinate(firstIata);
+        var secondPoint = await _geoCoordinateService.GetGeoCoordinate(secondIata);
 
         return CalculateDistance(firstPoint.Location, secondPoint.Location);
     }
@@ -36,16 +36,5 @@ public class DistanceService : IDistanceService
         {
             Value = distance,
         };
-    }
-
-    private async Task<GeoPosition> GetGeoPosition(IataModel model)
-    {
-        var httpResponseMessage = await _httpClient.GetAsync(model.Name);
-        var isSuccessStatusCode = httpResponseMessage.IsSuccessStatusCode;
-        if (!isSuccessStatusCode)
-            throw new InvalidIataException("Failed to get geoposition", httpResponseMessage.StatusCode);
-
-        var content = httpResponseMessage.Content;
-        return await content.ReadFromJsonAsync<GeoPosition>() ?? throw new InvalidIataException("Failed to read data");
     }
 }
