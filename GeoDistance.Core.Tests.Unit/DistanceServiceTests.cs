@@ -22,7 +22,7 @@ public class DistanceServiceTests
     public async Task GetDistance_WithDifferentIATAs_Return()
     {
         var excepted = 8675048.422827687;
-        var actual = await _distanceService.GetDistance(FirstIATA, FirstIATA);
+        var actual = await _distanceService.GetDistance(FirstIATA);
 
         Assert.Equal(excepted, actual);
     }
@@ -32,7 +32,7 @@ public class DistanceServiceTests
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            await _distanceService.GetDistance(null, null);
+            await _distanceService.GetDistance(null);
         });
     }
 
@@ -41,14 +41,14 @@ public class DistanceServiceTests
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            await _distanceService.GetDistance(FirstIATA, null);
+            await _distanceService.GetDistance(FirstIATA);
         });
     }
 
     [Fact]
     public async Task GetDistance_WithSimilarIATA_ThrowException()
     {
-        var result = await _distanceService.GetDistance(FirstIATA, FirstIATA);
+        var result = await _distanceService.GetDistance(FirstIATA);
 
         Assert.Equal(0.0, result);
     }

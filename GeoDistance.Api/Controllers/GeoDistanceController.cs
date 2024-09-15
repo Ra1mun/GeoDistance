@@ -1,8 +1,8 @@
 namespace GeoDistance.Api.Controllers;
 
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
 
-using GeoDistance.Core;
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Services;
 
@@ -21,8 +21,8 @@ public class GeoDistanceController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<DistanceModel> GetDistance(IataModel firstIATA, IataModel secondIATA)
+    public async Task<DistanceModel> GetDistance([FromQuery] [Required] IataModel model)
     {
-        return await _distanceService.GetDistance(firstIATA, secondIATA);
+        return await _distanceService.GetDistance(model);
     }
 }
