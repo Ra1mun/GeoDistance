@@ -4,6 +4,6 @@ namespace GeoDistance.Core.Services;
 
 public interface IGeoCoordinateService
 {
-    Task<(GeoCoordinate, GeoCoordinate)> GetGeoCoordinates(IataModel model);
+    Task<(GeoCoordinate, GeoCoordinate)> GetTwoGeoCoordinates(IataModel model);
     Task<GeoCoordinate?> GetGeoCoordinate(string airport);
 }

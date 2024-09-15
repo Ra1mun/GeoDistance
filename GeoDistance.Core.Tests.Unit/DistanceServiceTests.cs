@@ -1,4 +1,6 @@
-﻿namespace GeoDistance.Core.Tests.Unit;
+﻿using Microsoft.Extensions.Caching.Memory;
+
+namespace GeoDistance.Core.Tests.Unit;
 
 using GeoDistance.Core.Services;
 using GeoDistance.Core.Dto;
@@ -13,7 +15,8 @@ public class DistanceServiceTests
     public DistanceServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        var geoCoordinateService = new GeoCoordinateService(httpClient);
+        var memoryCache = Substitute.For<MemoryCache>();
+        var geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
         _distanceService = new DistanceService(geoCoordinateService);
     }
 
@@ -27,8 +30,8 @@ public class DistanceServiceTests
     
     private readonly IataModel _badIataModel = new()
     {
-        FirstAirport = "",
-        SecondAirport = ""
+        FirstAirport = "AQW",
+        SecondAirport = "AQQ"
     };
 
     [Fact]

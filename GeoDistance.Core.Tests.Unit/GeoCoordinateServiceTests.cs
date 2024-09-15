@@ -4,6 +4,8 @@ using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
 using GeoDistance.Core.Services;
 
+using Microsoft.Extensions.Caching.Memory;
+
 using NSubstitute;
 
 using Xunit;
@@ -13,14 +15,15 @@ public class GeoCoordinateServiceTests
     public GeoCoordinateServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        _geoCoordinateService = new GeoCoordinateService(httpClient);
+        var memoryCache = Substitute.For<MemoryCache>();
+        _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
     }
 
     private readonly IGeoCoordinateService _geoCoordinateService;
 
     private readonly string _correctAirportName = "AMS";
 
-    private readonly string _badAirportName = "";
+    private readonly string _badAirportName = "AQW";
 
     [Fact]
     public async Task GetGeoCoordinate_WithBadAirportName_ThrowException()

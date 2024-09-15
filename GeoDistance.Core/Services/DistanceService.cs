@@ -1,9 +1,6 @@
 ﻿namespace GeoDistance.Core.Services;
 
-using System.Net.Http.Json;
-
 using GeoDistance.Core.Dto;
-using GeoDistance.Core.Exceptions;
 
 public class DistanceService : IDistanceService
 {
@@ -16,7 +13,7 @@ public class DistanceService : IDistanceService
 
     public async Task<DistanceModel> GetDistance(IataModel model)
     {
-        var geoCoordinates = await _geoCoordinateService.GetGeoCoordinates(model);
+        var geoCoordinates = await _geoCoordinateService.GetTwoGeoCoordinates(model);
 
         return CalculateDistance(geoCoordinates.Item1.Location, geoCoordinates.Item2.Location);
     }

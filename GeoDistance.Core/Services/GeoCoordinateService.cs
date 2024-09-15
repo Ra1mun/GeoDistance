@@ -1,20 +1,26 @@
-﻿using System.Net.Http.Json;
+﻿using Microsoft.Extensions.Caching.Memory;
+
+namespace GeoDistance.Core.Services;
+
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
 
-namespace GeoDistance.Core.Services;
+using System.Net.Http.Json;
 
 public class GeoCoordinateService : IGeoCoordinateService
 {
     private readonly HttpClient _httpClient;
+    private readonly IMemoryCache _cache;
 
-    public GeoCoordinateService(HttpClient httpClient)
+    public GeoCoordinateService(HttpClient httpClient,
+        IMemoryCache cache)
     {
         _httpClient = httpClient;
+        _cache = cache;
     }
 
 
-    public async Task<(GeoCoordinate, GeoCoordinate)> GetGeoCoordinates(IataModel model)
+    public async Task<(GeoCoordinate, GeoCoordinate)> GetTwoGeoCoordinates(IataModel model)
     {
         var firstCoordinate = await GetGeoCoordinate(model.FirstAirport);
         var secondCoordinate = await GetGeoCoordinate(model.SecondAirport);

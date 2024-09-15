@@ -15,7 +15,8 @@ public class GeoDistanceController : ControllerBase
 {
     private readonly IDistanceService _distanceService;
 
-    public GeoDistanceController(IDistanceService distanceService)
+    public GeoDistanceController(
+        IDistanceService distanceService)
     {
         _distanceService = distanceService;
     }

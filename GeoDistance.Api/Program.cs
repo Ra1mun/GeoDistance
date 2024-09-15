@@ -51,7 +51,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     AddCors(services);
 
     services.AddHealthChecks();
-    services.AddHttpClient<IDistanceService, DistanceService>(client =>
+    services.AddHttpClient<IGeoCoordinateService, GeoCoordinateService>(client =>
     {
         const string url = "GeoCoordinatesUrl";
         var uriString = configuration.GetSection(url).Get<string>();
@@ -60,6 +60,8 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 
         client.BaseAddress = new Uri(uriString);
     });
+
+    services.AddMemoryCache();
 }
 
 void AddCors(IServiceCollection services)
