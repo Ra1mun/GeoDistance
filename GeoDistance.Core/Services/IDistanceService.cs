@@ -4,5 +4,5 @@ using GeoDistance.Core.Dto;
 
 public interface IDistanceService
 {
-    Task<DistanceModel> GetDistance(IataModel firstIata, IataModel secondIata);
+    Task<DistanceModel> GetDistance(IataModel model);
 }

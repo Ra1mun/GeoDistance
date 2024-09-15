@@ -1,6 +1,8 @@
 ﻿namespace GeoDistance.Core.Dto;
 
-public record struct IataModel
+public record IataModel
 {
-    public string Name { get; init; }
+    public string FirstAirport { get; init; }
+
+    public string SecondAirport { get; init; }
 }
