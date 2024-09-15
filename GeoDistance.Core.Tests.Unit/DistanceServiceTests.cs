@@ -19,44 +19,32 @@ public class DistanceServiceTests
 
     private readonly IDistanceService _distanceService;
     
-    private readonly IataModel _firstIataModel = new()
+    private readonly IataModel _correctIataModel = new()
     {
-        Name = "AMS"
-    };
-
-    private readonly IataModel _secondIataModel = new()
-    {
-        Name = "MSC"
+        FirstAirport = "AMS",
+        SecondAirport = "MSC"
     };
     
     private readonly IataModel _badIataModel = new()
     {
-        Name = ""
+        FirstAirport = "",
+        SecondAirport = ""
     };
 
     [Fact]
-    public async Task GetDistance_WithBadIATAs_ThrowException()
+    public async Task GetDistance_WithBadIATAModel_ThrowException()
     {
-        await Assert.ThrowsAsync<InvalidIataException>(async () =>
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            await _distanceService.GetDistance(_badIataModel, _badIataModel);
+            await _distanceService.GetDistance(_badIataModel);
         });
     }
     
     [Fact]
-    public async Task GetDistance_WithCorrectAndBadIATAs_ThrowException()
-    {
-        await Assert.ThrowsAsync<InvalidIataException>(async () =>
-        {
-            await _distanceService.GetDistance(_firstIataModel, _badIataModel);
-        });
-    }
-    
-    [Fact]
-    public async Task GetDistance_WithCorrectIATAs_Returns()
+    public async Task GetDistance_WithCorrectIATAModel_Returns()
     {
         var exception = 8675048.422827687;
-        var actual = await _distanceService.GetDistance(_firstIataModel, _badIataModel);
+        var actual = await _distanceService.GetDistance(_correctIataModel);
         
         Assert.Equal(exception, actual.Value);
     }

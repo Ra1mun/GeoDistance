@@ -12,10 +12,19 @@ public class GeoCoordinateService : IGeoCoordinateService
     {
         _httpClient = httpClient;
     }
-    
-    public async Task<GeoCoordinate?> GetGeoCoordinate(IataModel model)
+
+
+    public async Task<(GeoCoordinate, GeoCoordinate)> GetGeoCoordinates(IataModel model)
     {
-        var httpResponseMessage = await _httpClient.GetAsync(model.Name);
+        var firstCoordinate = await GetGeoCoordinate(model.FirstAirport);
+        var secondCoordinate = await GetGeoCoordinate(model.SecondAirport);
+        
+        return (firstCoordinate, secondCoordinate);
+    }
+
+    public async Task<GeoCoordinate?> GetGeoCoordinate(string airport)
+    {
+        var httpResponseMessage = await _httpClient.GetAsync(airport);
         var isSuccessStatusCode = httpResponseMessage.IsSuccessStatusCode;
         if (!isSuccessStatusCode)
             throw new InvalidIataException("Failed to get GeoCoordinate", httpResponseMessage.StatusCode);

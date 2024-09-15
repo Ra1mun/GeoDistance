@@ -18,27 +18,21 @@ public class GeoCoordinateServiceTests
 
     private readonly IGeoCoordinateService _geoCoordinateService;
 
-    private readonly IataModel _correctIataModel = new()
-    {
-        Name = "AMS"
-    };
-    
-    private readonly IataModel _badIataModel = new()
-    {
-        Name = ""
-    };
+    private readonly string _correctAirportName = "AMS";
+
+    private readonly string _badAirportName = "";
 
     [Fact]
-    public async Task GetGeoCoordinate_WithoutIATA_ThrowException()
+    public async Task GetGeoCoordinate_WithBadAirportName_ThrowException()
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            await _geoCoordinateService.GetGeoCoordinate(_badIataModel);
+            await _geoCoordinateService.GetGeoCoordinate(_badAirportName);
         });
     }
     
     [Fact]
-    public async Task GetGeoCoordinate_WithCorrectIATA_ThrowException()
+    public async Task GetGeoCoordinate_WithCorrectAirportName_ThrowException()
     {
         var exception = new GeoCoordinate
         {
@@ -49,7 +43,7 @@ public class GeoCoordinateServiceTests
             }
         };
         
-        var actual = await _geoCoordinateService.GetGeoCoordinate(_correctIataModel);
+        var actual = await _geoCoordinateService.GetGeoCoordinate(_correctAirportName);
         
         Assert.Equal(exception, actual);
     }

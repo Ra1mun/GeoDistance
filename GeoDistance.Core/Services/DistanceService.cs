@@ -14,12 +14,11 @@ public class DistanceService : IDistanceService
         _geoCoordinateService = geoCoordinateService;
     }
 
-    public async Task<DistanceModel> GetDistance(IataModel firstIata, IataModel secondIata)
+    public async Task<DistanceModel> GetDistance(IataModel model)
     {
-        var firstPoint = await _geoCoordinateService.GetGeoCoordinate(firstIata);
-        var secondPoint = await _geoCoordinateService.GetGeoCoordinate(secondIata);
+        var geoCoordinates = await _geoCoordinateService.GetGeoCoordinates(model);
 
-        return CalculateDistance(firstPoint.Location, secondPoint.Location);
+        return CalculateDistance(geoCoordinates.Item1.Location, geoCoordinates.Item2.Location);
     }
 
     private static DistanceModel CalculateDistance(Location point1, Location point2)
