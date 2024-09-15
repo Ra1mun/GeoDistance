@@ -1,11 +1,16 @@
 namespace GeoDistance.Api.Controllers;
 
-using GeopositionDistace;
+using System.Net.Mime;
+
+using GeoDistance.Core;
+using GeoDistance.Core.Dto;
+using GeoDistance.Core.Services;
 
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("[controller]")]
+[Route("[controller]/v1/")]
+[Produces(MediaTypeNames.Application.Json)]
 public class GeoDistanceController : ControllerBase
 {
     private readonly IDistanceService _distanceService;
@@ -16,7 +21,7 @@ public class GeoDistanceController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<double> GetDistance(string firstIATA, string secondIATA)
+    public async Task<DistanceModel> GetDistance(IataModel firstIATA, IataModel secondIATA)
     {
         return await _distanceService.GetDistance(firstIATA, secondIATA);
     }

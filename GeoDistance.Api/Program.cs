@@ -1,4 +1,4 @@
-using GeopositionDistace;
+using GeoDistance.Core.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,4 +29,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

@@ -1,4 +1,4 @@
-﻿namespace GeopositionDistace;
+﻿namespace GeoDistance.Core.Dto;
 
 using System.Text.Json.Serialization;
 

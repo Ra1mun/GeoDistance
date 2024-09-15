@@ -1,27 +1,28 @@
 ﻿namespace GeoDistance.Core.Tests.Unit;
 
-using GeopositionDistace;
+using GeoDistance.Core.Services;
+
+using NSubstitute;
 
 using Xunit;
 
 public class DistanceServiceTests
 {
-    public DistanceServiceTests(HttpClient httpClient)
+    public DistanceServiceTests()
     {
-        _httpClient = httpClient;
+        var httpClient = Substitute.For<HttpClient>();
+        _distanceService = new DistanceService(httpClient);
     }
 
+    private readonly IDistanceService _distanceService;
     private readonly string FirstIATA = "AMS";
     private readonly string SecondIATA = "MSC";
-
-    private readonly HttpClient _httpClient;
 
     [Fact]
     public async Task GetDistance_WithDifferentIATAs_Return()
     {
-        IDistanceService distanceService = new DistanceService(_httpClient);
         var excepted = 8675048.422827687;
-        var actual = await distanceService.GetDistance(FirstIATA, FirstIATA);
+        var actual = await _distanceService.GetDistance(FirstIATA, FirstIATA);
 
         Assert.Equal(excepted, actual);
     }
@@ -31,8 +32,7 @@ public class DistanceServiceTests
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            IDistanceService distanceService = new DistanceService(_httpClient);
-            await distanceService.GetDistance(null, null);
+            await _distanceService.GetDistance(null, null);
         });
     }
 
@@ -41,37 +41,15 @@ public class DistanceServiceTests
     {
         await Assert.ThrowsAsync<InvalidOperationException>(async () =>
         {
-            IDistanceService distanceService = new DistanceService(_httpClient);
-            await distanceService.GetDistance(FirstIATA, null);
+            await _distanceService.GetDistance(FirstIATA, null);
         });
     }
 
     [Fact]
     public async Task GetDistance_WithSimilarIATA_ThrowException()
     {
-        IDistanceService distanceService = new DistanceService(_httpClient);
-        var result = await distanceService.GetDistance(FirstIATA, FirstIATA);
+        var result = await _distanceService.GetDistance(FirstIATA, FirstIATA);
 
         Assert.Equal(0.0, result);
-    }
-
-    [Fact]
-    public async Task GetGeoposition_WithCorrectIATA_Return()
-    {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-        {
-            IDistanceService distanceService = new DistanceService(_httpClient);
-            await distanceService.GetGeoPosition(FirstIATA);
-        });
-    }
-
-    [Fact]
-    public async Task GetGeoposition_WithNull_ThrowException()
-    {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
-        {
-            IDistanceService distanceService = new DistanceService(_httpClient);
-            await distanceService.GetGeoPosition(null);
-        });
     }
 }
