@@ -19,7 +19,8 @@ public class GeoCoordinateServiceTests
         var httpClient = Substitute.For<HttpClient>();
         httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
         
-        var memoryCache = Substitute.For<IMemoryCache, MemoryCache>();
+        var memoryOptions = new MemoryCacheOptions();
+        var memoryCache = new MemoryCache(memoryOptions);
         _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
     }
 

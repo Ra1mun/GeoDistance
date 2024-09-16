@@ -1,14 +1,16 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-
-namespace GeoDistance.Core.Tests.Unit;
+﻿namespace GeoDistance.Core.Tests.Unit;
 
 using GeoDistance.Core.Services;
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
 
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.DependencyInjection;
+
 using NSubstitute;
 
 using Xunit;
+
 
 public class DistanceServiceTests
 {
@@ -16,8 +18,9 @@ public class DistanceServiceTests
     {
         var httpClient = Substitute.For<HttpClient>();
         httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
-        
-        var memoryCache = Substitute.For<IMemoryCache, MemoryCache>();
+
+        var memoryOptions = new MemoryCacheOptions();
+        var memoryCache = new MemoryCache(memoryOptions);
         var geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
         _distanceService = new DistanceService(geoCoordinateService);
     }
