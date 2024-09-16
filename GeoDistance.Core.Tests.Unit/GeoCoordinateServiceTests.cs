@@ -21,6 +21,7 @@ public class GeoCoordinateServiceTests
         
         var memoryOptions = new MemoryCacheOptions();
         var memoryCache = new MemoryCache(memoryOptions);
+        
         _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
     }
 

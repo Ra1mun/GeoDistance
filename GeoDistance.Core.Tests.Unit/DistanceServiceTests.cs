@@ -21,7 +21,9 @@ public class DistanceServiceTests
 
         var memoryOptions = new MemoryCacheOptions();
         var memoryCache = new MemoryCache(memoryOptions);
+        
         var geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
+        
         _distanceService = new DistanceService(geoCoordinateService);
     }
 
