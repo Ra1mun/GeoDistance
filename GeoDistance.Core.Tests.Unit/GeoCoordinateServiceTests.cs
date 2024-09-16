@@ -15,20 +15,21 @@ public class GeoCoordinateServiceTests
     public GeoCoordinateServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        var memoryCache = Substitute.For<MemoryCache>();
-        _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
+        httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
+        //var memoryCache = Substitute.For<MemoryCache>();
+        _geoCoordinateService = new GeoCoordinateService(httpClient);
     }
 
     private readonly IGeoCoordinateService _geoCoordinateService;
 
     private readonly string _correctAirportName = "AMS";
 
-    private readonly string _badAirportName = "AQW";
+    private readonly string _badAirportName = "AQQ";
 
     [Fact]
     public async Task GetGeoCoordinate_WithBadAirportName_ThrowException()
     {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidIataException>(async () =>
         {
             await _geoCoordinateService.GetGeoCoordinate(_badAirportName);
         });

@@ -4,10 +4,10 @@ namespace GeoDistance.Core.Exceptions;
 
 public class InvalidIataException : ApplicationException
 {
-    public InvalidIataException(string message, HttpStatusCode statusCode = HttpStatusCode.Accepted) : base(message)
+    public InvalidIataException(string message, int statusCode = 500) : base(message)
     {
         StatusCode = statusCode;
     }
 
-    public HttpStatusCode StatusCode { get; }
+    public int StatusCode { get; }
 }

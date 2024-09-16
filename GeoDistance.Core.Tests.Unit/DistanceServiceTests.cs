@@ -15,8 +15,11 @@ public class DistanceServiceTests
     public DistanceServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        var memoryCache = Substitute.For<MemoryCache>();
-        var geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
+        
+        httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
+        
+        //var memoryCache = Substitute.For<MemoryCache>();
+        var geoCoordinateService = new GeoCoordinateService(httpClient);
         _distanceService = new DistanceService(geoCoordinateService);
     }
 
@@ -37,7 +40,7 @@ public class DistanceServiceTests
     [Fact]
     public async Task GetDistance_WithBadIATAModel_ThrowException()
     {
-        await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+        await Assert.ThrowsAsync<InvalidIataException>(async () =>
         {
             await _distanceService.GetDistance(_badIataModel);
         });

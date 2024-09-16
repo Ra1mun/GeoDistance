@@ -60,6 +60,7 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 
         client.BaseAddress = new Uri(uriString);
     });
+    services.AddSingleton<IDistanceService, DistanceService>();
 
     services.AddMemoryCache();
 }
