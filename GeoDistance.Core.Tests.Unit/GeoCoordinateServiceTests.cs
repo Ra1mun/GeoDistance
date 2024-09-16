@@ -1,4 +1,6 @@
-﻿namespace GeoDistance.Core.Tests.Unit;
+﻿using Microsoft.Extensions.Caching.Distributed;
+
+namespace GeoDistance.Core.Tests.Unit;
 
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
@@ -16,8 +18,9 @@ public class GeoCoordinateServiceTests
     {
         var httpClient = Substitute.For<HttpClient>();
         httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
-        //var memoryCache = Substitute.For<MemoryCache>();
-        _geoCoordinateService = new GeoCoordinateService(httpClient);
+        
+        var memoryCache = Substitute.For<IMemoryCache, MemoryCache>();
+        _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
     }
 
     private readonly IGeoCoordinateService _geoCoordinateService;

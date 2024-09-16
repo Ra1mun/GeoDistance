@@ -15,11 +15,10 @@ public class DistanceServiceTests
     public DistanceServiceTests()
     {
         var httpClient = Substitute.For<HttpClient>();
-        
         httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
         
-        //var memoryCache = Substitute.For<MemoryCache>();
-        var geoCoordinateService = new GeoCoordinateService(httpClient);
+        var memoryCache = Substitute.For<IMemoryCache, MemoryCache>();
+        var geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
         _distanceService = new DistanceService(geoCoordinateService);
     }
 

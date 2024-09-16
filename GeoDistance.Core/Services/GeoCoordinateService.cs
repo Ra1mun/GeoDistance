@@ -10,15 +10,15 @@ using System.Net.Http.Json;
 public class GeoCoordinateService : IGeoCoordinateService
 {
     private readonly HttpClient _httpClient;
-    //private readonly IMemoryCache _cache;
+    private readonly IMemoryCache _cache;
 
     public GeoCoordinateService(
-        HttpClient httpClient
-        //IMemoryCache cache
+        HttpClient httpClient,
+        IMemoryCache cache
         )
     {
         _httpClient = httpClient;
-        //_cache = cache;
+        _cache = cache;
     }
 
 

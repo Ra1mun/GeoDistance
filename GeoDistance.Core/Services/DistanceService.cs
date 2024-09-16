@@ -13,9 +13,10 @@ public class DistanceService : IDistanceService
 
     public async Task<DistanceModel> GetDistance(IataModel model)
     {
-        var geoCoordinates = await _geoCoordinateService.GetTwoGeoCoordinates(model);
+        var coordinate1 = await _geoCoordinateService.GetGeoCoordinate(model.FirstAirport);
+        var coordinate2 = await _geoCoordinateService.GetGeoCoordinate(model.SecondAirport);
 
-        return CalculateDistance(geoCoordinates.Item1.Location, geoCoordinates.Item2.Location);
+        return CalculateDistance(coordinate1.Location, coordinate2.Location);
     }
 
     private static DistanceModel CalculateDistance(Location point1, Location point2)
