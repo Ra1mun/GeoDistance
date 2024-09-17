@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace GeoDistance.Core.Exceptions;
+﻿namespace GeoDistance.Core.Exceptions;
 
 public class InvalidIataException : ApplicationException
 {

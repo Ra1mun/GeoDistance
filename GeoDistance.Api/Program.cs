@@ -136,7 +136,7 @@ async Task ConfigureApplication(WebApplication app)
     app.MapControllers();
     app.MapHealthChecks("/healthz", new HealthCheckOptions { Predicate = x => x.Tags.Contains("live") })
         .AllowAnonymous();
-    
+
     app.MapHealthChecks("/ready", new HealthCheckOptions { Predicate = x => x.Tags.Contains("ready") })
         .AllowAnonymous();
 
@@ -154,6 +154,9 @@ void SetThreads()
     ThreadPool.SetMinThreads(threads, threads);
 }
 
-public partial class Program
+namespace GeoDistance.Api
 {
+    public class Program
+    {
+    }
 }

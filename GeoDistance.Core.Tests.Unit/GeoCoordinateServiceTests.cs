@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Distributed;
-
-namespace GeoDistance.Core.Tests.Unit;
+﻿namespace GeoDistance.Core.Tests.Unit;
 
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
@@ -18,10 +16,10 @@ public class GeoCoordinateServiceTests
     {
         var httpClient = Substitute.For<HttpClient>();
         httpClient.BaseAddress = new Uri("https://places-dev.continent.ru/airports/");
-        
+
         var memoryOptions = new MemoryCacheOptions();
         var memoryCache = new MemoryCache(memoryOptions);
-        
+
         _geoCoordinateService = new GeoCoordinateService(httpClient, memoryCache);
     }
 
@@ -39,7 +37,7 @@ public class GeoCoordinateServiceTests
             await _geoCoordinateService.GetGeoCoordinate(_badAirportName);
         });
     }
-    
+
     [Fact]
     public async Task GetGeoCoordinate_WithCorrectAirportName_ThrowException()
     {
@@ -48,12 +46,12 @@ public class GeoCoordinateServiceTests
             Location = new Location
             {
                 Longitude = 4.763385,
-                Latitude = 52.309069
-            }
+                Latitude = 52.309069,
+            },
         };
-        
+
         var actual = await _geoCoordinateService.GetGeoCoordinate(_correctAirportName);
-        
+
         Assert.Equal(exception, actual);
     }
 }

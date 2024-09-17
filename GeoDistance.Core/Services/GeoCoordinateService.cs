@@ -1,33 +1,24 @@
-﻿using Microsoft.Extensions.Caching.Memory;
+﻿namespace GeoDistance.Core.Services;
 
-namespace GeoDistance.Core.Services;
+using System.Net.Http.Json;
 
 using GeoDistance.Core.Dto;
 using GeoDistance.Core.Exceptions;
 
-using System.Net.Http.Json;
+using Microsoft.Extensions.Caching.Memory;
 
 public class GeoCoordinateService : IGeoCoordinateService
 {
-    private readonly HttpClient _httpClient;
     private readonly IMemoryCache _cache;
+    private readonly HttpClient _httpClient;
 
     public GeoCoordinateService(
         HttpClient httpClient,
         IMemoryCache cache
-        )
+    )
     {
         _httpClient = httpClient;
         _cache = cache;
-    }
-
-
-    public async Task<(GeoCoordinate, GeoCoordinate)> GetTwoGeoCoordinates(IataModel model)
-    {
-        var firstCoordinate = await GetGeoCoordinate(model.FirstAirport);
-        var secondCoordinate = await GetGeoCoordinate(model.SecondAirport);
-        
-        return (firstCoordinate, secondCoordinate);
     }
 
     public async Task<GeoCoordinate?> GetGeoCoordinate(string airport)
@@ -40,5 +31,13 @@ public class GeoCoordinateService : IGeoCoordinateService
         var content = httpResponseMessage.Content;
         return await content.ReadFromJsonAsync<GeoCoordinate>()
                ?? throw new InvalidIataException("Failed to read data");
+    }
+
+    public async Task<(GeoCoordinate, GeoCoordinate)> GetTwoGeoCoordinates(IataModel model)
+    {
+        var firstCoordinate = await GetGeoCoordinate(model.FirstAirport);
+        var secondCoordinate = await GetGeoCoordinate(model.SecondAirport);
+
+        return (firstCoordinate, secondCoordinate);
     }
 }

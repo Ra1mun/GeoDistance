@@ -1,6 +1,6 @@
-﻿using GeoDistance.Core.Dto;
+﻿namespace GeoDistance.Core.Services;
 
-namespace GeoDistance.Core.Services;
+using GeoDistance.Core.Dto;
 
 public interface IGeoCoordinateService
 {
