@@ -4,5 +4,5 @@ using GeoDistance.Core.Dto;
 
 public interface IGeoCoordinateService
 {
-    Task<GeoCoordinate?> GetGeoCoordinate(string airport);
+    Task<GeoCoordinate> GetGeoCoordinateAsync(string airport, CancellationToken cancellationToken = default);
 }

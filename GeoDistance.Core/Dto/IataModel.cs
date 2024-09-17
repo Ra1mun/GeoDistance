@@ -2,7 +2,7 @@
 
 public record IataModel
 {
-    public string FirstAirport { get; init; }
+    public string FirstAirport { get; init; } = string.Empty;
 
-    public string SecondAirport { get; init; }
+    public string SecondAirport { get; init; } = string.Empty;
 }
