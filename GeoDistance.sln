@@ -5,7 +5,7 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Core", "GeoDistance.Core\GeoDistance.Core.csproj", "{863B349A-F145-4E1D-AF50-6C9E9E062CDF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Core.Tests.Unit", "GeoDistance.Core.Tests.Unit\GeoDistance.Core.Tests.Unit.csproj", "{62EBF6C7-B146-43CA-8B21-94DDF68D0A39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Core.Tests.Integration", "GeoDistance.Core.Tests.Integration\GeoDistance.Core.Tests.Integration.csproj", "{62EBF6C7-B146-43CA-8B21-94DDF68D0A39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeoDistance.Api", "GeoDistance.Api\GeoDistance.Api.csproj", "{F20848C0-93D1-4B11-9E5C-4597099B784C}"
 EndProject

@@ -14,15 +14,22 @@ using Microsoft.AspNetCore.Mvc;
 public class GeoDistanceController : ControllerBase
 {
     private readonly IDistanceService _distanceService;
+    private readonly IIataModelValidationService _validationService;
 
-    public GeoDistanceController(IDistanceService distanceService)
+    public GeoDistanceController(IDistanceService distanceService, IIataModelValidationService validationService)
     {
         _distanceService = distanceService;
+        _validationService = validationService;
     }
 
     [HttpGet]
-    public async Task<DistanceModel> GetDistance([FromQuery] [Required] IataModel model)
+    public async Task<ActionResult<DistanceModel>> GetDistance(
+        [FromQuery] [Required] IataModel model,
+        CancellationToken cancellationToken = default)
     {
-        return await _distanceService.GetDistance(model);
+        if (!_validationService.Validate(model))
+            return BadRequest("Validation error");
+
+        return await _distanceService.GetDistanceAsync(model, cancellationToken);
     }
 }

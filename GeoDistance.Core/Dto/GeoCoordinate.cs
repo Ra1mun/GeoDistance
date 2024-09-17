@@ -1,6 +1,6 @@
 ﻿namespace GeoDistance.Core.Dto;
 
-public record GeoPosition
+public record GeoCoordinate
 {
     public Location Location { get; init; }
 }

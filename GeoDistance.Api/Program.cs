@@ -2,8 +2,8 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.Json.Serialization;
 
-using GeoDistance.Api.Exceptions;
 using GeoDistance.Api.Middleware;
+using GeoDistance.Core.Configuration;
 using GeoDistance.Core.Services;
 
 using Microsoft.AspNetCore.Cors.Infrastructure;
@@ -51,15 +51,25 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     AddCors(services);
 
     services.AddHealthChecks();
-    services.AddHttpClient<IDistanceService, DistanceService>(client =>
-    {
-        const string url = "GeoCoordinatesUrl";
-        var uriString = configuration.GetSection(url).Get<string>();
-        if (string.IsNullOrEmpty(uriString))
-            throw new ConfigurationException($"Missing {url}");
+    services.AddHttpClient();
 
-        client.BaseAddress = new Uri(uriString);
-    });
+    services.AddScoped<IDistanceService, DistanceService>();
+    services.AddScoped<IIataModelValidationService, IataModelValidationService>();
+    services.AddScoped<IGeoCoordinateService, GeoCoordinateService>();
+    AddConfigurations(services, configuration);
+
+    services.AddMemoryCache();
+}
+
+static void AddConfigurations(IServiceCollection services, IConfiguration configuration)
+{
+    var cacheConfiguration = configuration.GetSection(CacheConfiguration.KEY);
+    services.AddOptions<CacheConfiguration>()
+        .Bind(cacheConfiguration);
+
+    var serverConfiguration = configuration.GetSection(GeoCoordinateServerConfiguration.KEY);
+    services.AddOptions<GeoCoordinateServerConfiguration>()
+        .Bind(serverConfiguration);
 }
 
 void AddCors(IServiceCollection services)
@@ -88,7 +98,6 @@ void AddSwaggerGen(IServiceCollection services)
         {
             Title = projectName,
             Version = "v1",
-            Description = $"REST API ОПДПиЗЛА {version}",
         });
 
         c.SupportNonNullableReferenceTypes();
@@ -133,7 +142,7 @@ async Task ConfigureApplication(WebApplication app)
     app.MapControllers();
     app.MapHealthChecks("/healthz", new HealthCheckOptions { Predicate = x => x.Tags.Contains("live") })
         .AllowAnonymous();
-    
+
     app.MapHealthChecks("/ready", new HealthCheckOptions { Predicate = x => x.Tags.Contains("ready") })
         .AllowAnonymous();
 
@@ -151,6 +160,9 @@ void SetThreads()
     ThreadPool.SetMinThreads(threads, threads);
 }
 
-public partial class Program
+namespace GeoDistance.Api
 {
+    public class Program
+    {
+    }
 }

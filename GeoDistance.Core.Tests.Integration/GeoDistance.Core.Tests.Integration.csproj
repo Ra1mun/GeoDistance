@@ -11,6 +11,8 @@
 
     <ItemGroup>
         <PackageReference Include="coverlet.collector" Version="3.2.0"/>
+        <PackageReference Include="Flurl.Http" Version="4.0.2"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.33"/>
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
         <PackageReference Include="NSubstitute" Version="5.1.0"/>
         <PackageReference Include="xunit" Version="2.4.2"/>
@@ -18,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\GeoDistance.Core\GeoDistance.Core.csproj"/>
+        <ProjectReference Include="..\GeoDistance.Api\GeoDistance.Api.csproj"/>
     </ItemGroup>
-
 </Project>

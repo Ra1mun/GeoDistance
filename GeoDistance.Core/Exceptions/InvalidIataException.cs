@@ -1,11 +1,8 @@
 ﻿namespace GeoDistance.Core.Exceptions;
 
-public class InvalidIataException : ApplicationException
+public class InvalidIataException : BaseGeoDistanceException
 {
-    public InvalidIataException(string message, int statusCode = 500) : base(message)
+    public InvalidIataException(string message, int statusCode = 500) : base(message, statusCode)
     {
-        StatusCode = statusCode;
     }
-
-    public int StatusCode { get; }
 }

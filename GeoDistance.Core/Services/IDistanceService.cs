@@ -4,5 +4,5 @@ using GeoDistance.Core.Dto;
 
 public interface IDistanceService
 {
-    Task<DistanceModel> GetDistance(IataModel model);
+    Task<DistanceModel> GetDistanceAsync(IataModel model, CancellationToken cancellationToken = default);
 }
